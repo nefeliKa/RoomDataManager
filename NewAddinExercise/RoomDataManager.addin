@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Assembly>RoomDataManager.dll</Assembly>
+	<Name>Room Data Manager</Name>
+    <FullClassName>RoomDataManager.App</FullClassName>
+    <ClientId>D50A48A8-4A06-46F7-B1BD-84EAADD40B15</ClientId>
+    <VendorId>NEFE</VendorId>
+    <VendorDescription>Nefeli Learning</VendorDescription>
+  </AddIn>
+</RevitAddIns>
