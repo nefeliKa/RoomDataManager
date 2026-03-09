@@ -27,27 +27,15 @@ namespace RoomDataManager.Commands
         {
             // Add the Revit docs
             UIDocument uidoc = commandData.Application.ActiveUIDocument;
-            Document doc = uidoc.Document;
 
-            // User picks the rooms himself
-            ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
-            if (selectedIds.Count == 0)
+            var results = RoomHelper.GetSelectedRooms(uidoc);
+            if (results.roomsList.Count == 0 || !string.IsNullOrEmpty(results.message))
             {
-                TaskDialog.Show(title: "Room Inspector", mainInstruction: "Please select some rooms before runnign this command");
+                TaskDialog.Show(title: "Room Inspector", mainInstruction: results.message);
                 return Result.Failed;
             }
 
-            List<Room> rooms = selectedIds
-                                .Select(id => doc.GetElement(id))
-                                .OfType<Room>()
-                                .ToList();
-            if (rooms.Count == 0)
-            {
-                TaskDialog.Show(title: "Room Inspector", mainInstruction: "None of the selected elements are rooms");
-                return Result.Failed;
-            }
-
-            string report = RoomHelper.GenerateReport(rooms: rooms); 
+            string report = RoomHelper.GenerateReport(rooms: results.roomsList); 
             TaskDialog.Show(title: "Room Inspector", mainInstruction: report);
             return Result.Succeeded;
         }
