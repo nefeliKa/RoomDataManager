@@ -4,23 +4,24 @@ using Autodesk.Revit.DB.Architecture;
 
 namespace RoomDataManager.Helpers
 {
-    internal class RoomReport
+    public class RoomReport
     {
-        private readonly string _roomName; 
-        private readonly string _roomNumber; 
-        private readonly double _roomArea; 
         private readonly Room _room;
 
+        public string Name { get; }
+        public string Number { get; }
+        public double Area { get; }
+        public string Comment { get; internal set; }
         public bool commentWasEmpty { get; }
         public bool WasUpdated { get; internal set; }
 
         public RoomReport(Room room)
         {
-            _roomName = room.Name;
-            _roomNumber = room.Number;
-            _roomArea = room.Area;
+            Name = room.Name;
+            Number = room.Number;
+            Area = Math.Round(room.Area*0.0929,2);
             _room = room;
-
+            Comment = room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)?.AsString() ?? string.Empty;
             commentWasEmpty = ReadCommentIsEmpty();
 
 
@@ -36,9 +37,9 @@ namespace RoomDataManager.Helpers
 
         public string MakeReport()
         {
-            string roomName = $"Name: {_roomName}";
-            string roomNumber = $"Number: {_roomNumber}";
-            string roomArea = $"Area: {Math.Round((_roomArea * 0.0929), 2)} m²";
+            string roomName = $"Name: {Name}";
+            string roomNumber = $"Number: {Number}";
+            string roomArea = $"Area: {Area} m²";
             string report = String.Join(" | ", new[] { roomName, roomNumber, roomArea });
             return report; 
         }
@@ -48,9 +49,9 @@ namespace RoomDataManager.Helpers
             string reportAllRooms = string.Empty;
             foreach (RoomReport rep in reportList)
             {
-                string roomName = $"Name: {rep._roomName}";
-                string roomNumber = $"Number: {rep._roomNumber}";
-                string roomArea = $"Area: {Math.Round((rep._roomArea * 0.0929), 2)} m²";
+                string roomName = $"Name: {rep.Name}";
+                string roomNumber = $"Number: {rep.Number}";
+                string roomArea = $"Area: {rep.Area} m²";
                 string roomStatus = $"Status: {rep.ToString()}";
                 string report = String.Join(" | ", new[] { roomName, roomNumber, roomArea, roomStatus });
                 reportAllRooms += $"\n{report}";
@@ -64,22 +65,22 @@ namespace RoomDataManager.Helpers
             string summary = String.Empty;
             if (commentWasEmpty) 
             {
-                summary = $"\n{_roomName}'s comment section was empty.";
+                summary = $"\n{Name}'s comment section was empty.";
 
 
             }
             else
             {
-                summary = $"\n{_roomName}'s comment section was already filled.";
+                summary = $"\n{Name}'s comment section was already filled.";
             }
 
             if (WasUpdated)
             {
-                summary = summary + $"\n{_roomName}'s comment section was updated with 'Needs Review'."; 
+                summary = summary + $"\n{Name}'s comment section was updated with 'Needs Review'."; 
             }
             else
             {
-                summary = summary + $"\n{_roomName}'s comment section was not updated."; 
+                summary = summary + $"\n{Name}'s comment section was not updated."; 
             }
 
             return summary;

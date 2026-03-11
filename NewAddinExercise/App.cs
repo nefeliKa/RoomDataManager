@@ -12,9 +12,11 @@ namespace RoomDataManager
             PushButtonData roomInspector_button = new PushButtonData(name:"RoomInspector", text: "Room Inspector", assemblyName: Assembly.GetExecutingAssembly().Location, className: "RoomDataManager.Commands.RoomInspectorCommand");
             PushButtonData autoselect_roomInspector_button = new PushButtonData(name: "InspectByFloor", text: "InspectByFloor", assemblyName: Assembly.GetExecutingAssembly().Location, className: "RoomDataManager.Commands.RoomsByFloorCommand");
             PushButtonData roomReporter_button = new PushButtonData(name: "RoomReporter", text: "Room Reporter", assemblyName: Assembly.GetExecutingAssembly().Location, className: "RoomDataManager.Commands.ParameterWriterCommand");
+            PushButtonData csvExporter_button = new PushButtonData(name: "CSVExporter", text: "Export Room Data \n To CSV", assemblyName: Assembly.GetExecutingAssembly().Location, className: "RoomDataManager.Commands.CsvExporterCommand");
             panel.AddItem(roomInspector_button);
             panel.AddItem(autoselect_roomInspector_button);
             panel.AddItem(roomReporter_button);
+            panel.AddItem(csvExporter_button);
             return Result.Succeeded;
         }
 
