@@ -1,5 +1,4 @@
 ﻿using Autodesk.Revit.DB.Architecture;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 
 
@@ -13,13 +12,15 @@ namespace RoomDataManager.Helpers
 
             if (report.commentWasEmpty)
             {
-                using (Transaction t = new Transaction(doc, "name"))
+                using (Transaction t = new Transaction(doc, "Update Comments"))
                 {
+                    string commentMessage = "Needs Review";
                     t.Start();
                     room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)
-                        .Set("Needs Review");
+                        .Set(commentMessage);
                     t.Commit();
                     report.WasUpdated = true;
+                    report.Comment = commentMessage;
 
                 }
 
@@ -27,9 +28,25 @@ namespace RoomDataManager.Helpers
             return report; 
         }
 
-        internal static RoomReport TryWriteComment(Room room, Document doc, string value)
+        internal static RoomReport TryWriteComment(Room room, Document doc, string commentMessage)
         {
-            return new RoomReport(room);
+            RoomReport report = new RoomReport(room);
+
+            if (report.commentWasEmpty)
+            {
+                using (Transaction t = new Transaction(doc, "Update Comments"))
+                {
+                    t.Start();
+                    room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)
+                        .Set(commentMessage);
+                    t.Commit();
+                    report.WasUpdated = true;
+                    report.Comment = commentMessage;
+
+                }
+
+            }
+            return report;
         }
     }
 }

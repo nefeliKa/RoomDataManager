@@ -18,8 +18,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	<Copy SourceFiles="$(TargetPath)"
-		  DestinationFolder="$(AppData)\Autodesk\Revit\Addins\2026\"/>
+	<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\2026\" />
 	</Target>
 
 </Project>
