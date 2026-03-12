@@ -1,4 +1,8 @@
-﻿using Autodesk.Revit.DB;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
@@ -36,7 +40,9 @@ namespace RoomDataManager.Helpers
             }
             catch (Exception e)
             {
-                File.AppendAllText(path: "log.txt", contents: $"{e}");
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string logFilePath = Path.Combine(desktopPath, "log.txt");
+                File.AppendAllText(logFilePath, $"{e.Message}\n");
                 return string.Empty;
             }
 
