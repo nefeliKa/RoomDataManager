@@ -1,10 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\RoomInspector.png" />
+	  <None Remove="Resources\RoomInspectorByFloor.png" />
+	  <None Remove="Resources\RoomReporter.png" />
+	  <None Remove="Resources\ToCSV.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\RoomInspector.png" />
+	  <EmbeddedResource Include="Resources\RoomInspectorByFloor.png" />
+	  <EmbeddedResource Include="Resources\RoomReporter.png" />
+	  <EmbeddedResource Include="Resources\ToCSV.png" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="RevitAPI">
