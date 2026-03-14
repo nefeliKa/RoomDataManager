@@ -23,7 +23,7 @@ namespace RoomDataManager
                new(){ ["name"] = "Inspect By Floor", ["classname"] = "RoomsByFloorCommand", ["resource"] = "RoomInspectorByFloor.png", ["description"] = "Automatically inspects all rooms in the active floor/level and returns a list of data including Name, Number, Area(m2) "},
                new(){ ["name"] = "Room Reporter", ["classname"] = "ParameterWriterCommand", ["resource"] = "RoomReporter.png", ["description"] = "Inspects selected rooms. Updates the comment section if it is empty. Returns a list of data including Name, Number, Area(m2) and status of Comment section."},
                new(){ ["name"] = "CSV Exporter", ["classname"] = "CsvExporterCommand", ["resource"] = "ToCSV.png", ["description"] = "Exports a CSV report on selected rooms which includes Name, Number, Area(m2), Comments, and if the comment was empty."},
-               new(){ ["name"] = "BIM Checker", ["classname"] = "BIMCheckerCommand", ["resource"] = "bim.png", ["description"] = "Simple BIM standards checker that validates rooms are within required parameters"},
+               new(){ ["name"] = "BIM Checker", ["classname"] = "BimCheckerCommand", ["resource"] = "bim.png", ["description"] = "Simple BIM standards checker that validates rooms are within required parameters"},
             };
 
             // Assembly = the compiled .dll of this add-in. We need it to access embedded resources.

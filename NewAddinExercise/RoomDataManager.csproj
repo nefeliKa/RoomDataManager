@@ -8,6 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\bim.png" />
 	  <None Remove="Resources\RoomInspector.png" />
 	  <None Remove="Resources\RoomInspectorByFloor.png" />
 	  <None Remove="Resources\RoomReporter.png" />
@@ -15,6 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\bim.png" />
 	  <EmbeddedResource Include="Resources\RoomInspector.png" />
 	  <EmbeddedResource Include="Resources\RoomInspectorByFloor.png" />
 	  <EmbeddedResource Include="Resources\RoomReporter.png" />

@@ -51,7 +51,7 @@ namespace RoomDataManager.Helpers
         /// This method checks if any elements have been selected and if so, it returns a list of all the room elements.
         /// </summary>
         /// <param name="uidoc"> A Revit UIDocument </param>
-        /// <returns>A tuple of a List of Room elements and a string message</returns>
+        /// <returns>A tuple of a List of Room elements and a string message in case of an error</returns>
         internal static (List<Room> roomsList, string message) GetSelectedRooms(UIDocument uidoc)
         {
             Document doc = uidoc.Document; 
