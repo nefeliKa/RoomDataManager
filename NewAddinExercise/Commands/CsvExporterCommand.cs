@@ -4,6 +4,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.Attributes;
 using RoomDataManager.Helpers;
 using RoomDataManager.Exporters;
+using RoomDataManager.Factories;
 
 
 namespace RoomDataManager.Commands
@@ -35,7 +36,7 @@ namespace RoomDataManager.Commands
             string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             //Export to CSV
-            IExporter exporter = new CsvExporter(folderPath: folderPath);
+            IExporter exporter = ExporterFactory.Create("csv", folderPath);
             exporter.Export(roomReports: roomReports);
 
             // Return a message to the Revit screen 
