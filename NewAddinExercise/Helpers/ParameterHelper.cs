@@ -46,6 +46,30 @@ namespace RoomDataManager.Helpers
                 }
 
             }
+
+            return report;
+        }
+
+        internal static RoomReport TryWriteComment(Room room, Document doc, string commentMessage, bool forceWrite)
+        {
+            RoomReport report = new RoomReport(room);
+
+            if (forceWrite)
+            {
+                using (Transaction t = new Transaction(doc, "Update Comments"))
+                {
+                    t.Start();
+                    Parameter roomComment = room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
+                    string roomCommentString = roomComment.AsString() ?? string.Empty; 
+                    roomComment.Set(roomCommentString + commentMessage);
+                    t.Commit();
+                    report.WasUpdated = true;
+                    report.Comment = roomCommentString + commentMessage;
+
+                }
+
+            }
+
             return report;
         }
     }
