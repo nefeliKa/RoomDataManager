@@ -48,8 +48,9 @@ namespace RoomDataManager.Exporters
             }
             catch (Exception e)
             {
-                
-                File.WriteAllText("log.txt", e.ToString());
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string logFilePath = Path.Combine(desktopPath, "log.txt");
+                File.WriteAllText(logFilePath, $"{e.Message}\n");
             }
         }
 

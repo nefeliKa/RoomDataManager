@@ -75,15 +75,33 @@ namespace RoomDataManager.Commands
                 }
 
                 // Step 5: Update the comment based on the existing issues. 
-                foreach (Room room in rooms)
+                using (Transaction transaction = new Transaction(doc, "Write Comment"))
                 {
-                    IEnumerable<RoomIssue> roomIssues =  issues.Where(issue => issue.RoomName == room.Name);
-                    if (roomIssues.Any())
-                    {
-                        string roomIssuesComment = string.Join("\n", roomIssues.Select(i => i.Description));
-                        ParameterHelper.TryWriteComment(room: room, doc: doc, commentMessage: roomIssuesComment, forceWrite: true);
-                    }
+                    transaction.Start();
+                    try 
+                    { 
+                        foreach (Room room in rooms)
+                        {
+                            IEnumerable<RoomIssue> roomIssues =  issues.Where(issue => issue.RoomName == room.Name);
+                            if (roomIssues.Any())
+                            {
+                                string roomIssuesComment = string.Join("\n", roomIssues.Select(i => i.Description));
+                                room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).Set(string.Empty);
+                                ParameterHelper.TryWriteComment(room: room, doc: doc, commentMessage: roomIssuesComment, forceWrite: true);
+                            }
 
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        
+                        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                        string logFilePath = Path.Combine(desktopPath, "log.txt");
+                        File.AppendAllText(logFilePath, $"{e.Message}\n");
+                        transaction.RollBack();
+                        return Result.Failed;
+                    }
+                    transaction.Commit();
                 }
 
                 // Otherwise build a report string from issues and show in TaskDialog

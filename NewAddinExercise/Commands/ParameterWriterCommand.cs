@@ -39,21 +39,30 @@ namespace RoomDataManager.Commands
 
             List<RoomReport> roomReportList = new List<RoomReport>();
             // for each room make a report 
-            foreach (Room room in results.roomsList)
+            using (Transaction transaction = new Transaction(doc, "Write Comments"))
             {
-                try
-                {
-                    RoomReport report = ParameterHelper.TryWriteComment(room, doc);
-                    roomReportList.Add(report);
-                }
+            transaction.Start();
 
-                catch (Exception e)
+                foreach (Room room in results.roomsList)
                 {
-                    string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    string logFilePath = Path.Combine(desktopPath, "log.txt");
-                    File.AppendAllText(logFilePath, $"{e.Message}\n");
-                }
+                    try
+                    {
+                        RoomReport report = ParameterHelper.TryWriteComment(room, doc);
+                        roomReportList.Add(report);
 
+                    }
+
+                    catch (Exception e)
+                    {
+                        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                        string logFilePath = Path.Combine(desktopPath, "log.txt");
+                        File.AppendAllText(logFilePath, $"{e.Message}\n");
+                        transaction.RollBack();
+                        return Result.Failed;
+                    }
+
+                }
+            transaction.Commit();
             }
 
             // compile and show the report in task dialog
