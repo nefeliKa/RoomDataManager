@@ -3,6 +3,8 @@ name: Build Room Data Manager
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -31,3 +33,39 @@ jobs:
             **/bin/Release/**/*.dll
             **/*.addin
           retention-days: 30
+
+
+
+  release:
+    runs-on: windows-latest
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Zip artifact
+        run: |
+          New-Item -ItemType Directory -Path release_output
+          Copy-Item -Path "**/bin/Release/**/*.dll" -Destination release_output
+          Copy-Item -Path "**/*.addin" -Destination release_output
+          Compress-Archive -Path release_output/* -DestinationPath RoomDataManager.zip
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: RoomDataManager.zip
+          prerelease: true
+          name: "Room Data Manager ${{ github.ref_name }}"
