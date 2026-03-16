@@ -27,8 +27,9 @@ namespace RoomDataManager.Commands
 
 
             // Create report of each room
-            List<RoomReport> roomReports = result.roomList.Select(r => ParameterHelper.TryWriteComment(r, uidoc.Document, "Pending Review"))
-                                                          .ToList();
+            List<RoomReport> roomReports = result.roomList
+                                                  .Select(r => new RoomReport(r))
+                                                  .ToList();
 
             
             
