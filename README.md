@@ -29,6 +29,7 @@ C:\Users\<YourName>\AppData\Roaming\Autodesk\Revit\Addins\2026\
 Files to copy:
 - `RoomDataManager.dll`
 - `RoomDataManager.addin`
+- `bim_requirements.csv`
 
 4. Launch Revit. A new tab called **Room Data Manager** will appear in the ribbon.
 
@@ -59,6 +60,9 @@ Exports room data (name, number, area, comments) to a `.csv` file saved on your 
 Checks all selected rooms for common data issues:
 - Missing name, number, or comment
 - Area below the expected minimum for the room type
+
+Minimum area requirements are read from `bim_requirements.csv` in your Revit add-ins folder. Edit that file to customise thresholds for your project. If the file is missing, built-in defaults are used.
+
 ![Interface screenshot](RevitInstructions/BimChecker-5.JPG)
 
 Any issues found are written directly into the room's comment field in Revit, so they are visible in the model.
@@ -72,7 +76,6 @@ NewAddinExercise/
 ├── Commands/           # One file per ribbon button — entry points for each feature
 ├── Checkers/           # BIM validation logic (interfaces, rules, and runner)
 ├── Exporters/          # CSV export logic (base class, interface, implementation)
-├── Factories/          # Factory for creating exporter instances
 ├── Helpers/            # Shared utilities for reading room parameters and building reports
 ├── Resources/          # Button icons (.png) embedded in the add-in
 ├── App.cs              # Add-in entry point — registers the ribbon UI  with Revit
