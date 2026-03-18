@@ -25,7 +25,7 @@ namespace RoomDataManager.Helpers
         {
             Name = room.Name;
             Number = room.Number;
-            Area = Math.Round(room.Area*0.0929,2);
+            Area = Math.Round(UnitUtils.ConvertFromInternalUnits(room.Area, UnitTypeId.SquareMeters), 2);
             Comment = room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)?.AsString() ?? string.Empty;
             CommentWasEmpty = ReadCommentIsEmpty();
 
