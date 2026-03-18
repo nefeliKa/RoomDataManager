@@ -16,6 +16,10 @@ namespace RoomDataManager.Checkers
     {
         private readonly List<IRoomChecker> _checkers;
 
+        /// <summary>
+        /// Initializes the runner with the list of checkers to apply to each room.
+        /// </summary>
+        /// <param name="checkers">The checkers to run. Each will be applied to every room in <see cref="RunAll"/>.</param>
         public RoomCheckerRunner(List<IRoomChecker> checkers)
         {
             _checkers = checkers;

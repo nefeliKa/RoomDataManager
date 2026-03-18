@@ -6,6 +6,9 @@ using RoomDataManager.Helpers;
 
 namespace RoomDataManager.Commands
 {
+    /// <summary>
+    /// Displays a data report for all rooms found in the currently active floor plan view.
+    /// </summary>
     [Transaction(TransactionMode.ReadOnly)]
     public class RoomsByFloorCommand : IExternalCommand
     {

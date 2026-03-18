@@ -13,6 +13,10 @@ namespace RoomDataManager.Exporters
     /// </summary>
     public class CsvExporter : BaseExporter 
     {
+        /// <summary>
+        /// Initializes the exporter with the target output folder.
+        /// </summary>
+        /// <param name="folderPath">The folder where the CSV file will be saved.</param>
         public CsvExporter(string folderPath) : base(folderPath) // constructor passes the folder path to be stored at the abstract methods folderpath field
         {
         }

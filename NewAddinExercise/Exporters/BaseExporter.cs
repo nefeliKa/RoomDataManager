@@ -9,6 +9,7 @@ namespace RoomDataManager.Exporters
     /// </summary>
     public abstract class BaseExporter : IExporter
     {
+        /// <summary>The absolute path to the folder where exported files will be written.</summary>
         protected readonly string folderPath;
 
         /// <summary>

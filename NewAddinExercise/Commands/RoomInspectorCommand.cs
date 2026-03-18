@@ -6,6 +6,9 @@ using RoomDataManager.Helpers;
 
 namespace RoomDataManager.Commands
 {
+    /// <summary>
+    /// Displays a data report for all rooms selected by the user in the active Revit view.
+    /// </summary>
     [Transaction(TransactionMode.Manual)]
     public class RoomInspectorCommand : IExternalCommand
     {

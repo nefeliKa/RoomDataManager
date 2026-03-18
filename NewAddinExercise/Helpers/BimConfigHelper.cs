@@ -4,8 +4,25 @@ using System.IO;
 
 namespace RoomDataManager.Helpers
 {
+    /// <summary>
+    /// Provides helper methods for loading BIM configuration data, such as minimum area requirements, from a
+    /// configuration file.
+    /// </summary>
+    /// <remarks>This class is intended for internal use within the application and is not intended to be used
+    /// directly by external consumers.</remarks>
     internal static class BimConfigHelper
     {
+        /// <summary>
+        /// Loads minimum area requirements from a CSV file and returns the results along with any warnings encountered
+        /// during loading.
+        /// </summary>
+        /// <remarks>The method attempts to read a CSV file from the user's application data directory. If
+        /// the file does not exist, default area requirements are returned. Warnings are provided for missing files,
+        /// empty files, or lines that cannot be parsed. The method does not throw exceptions for missing or malformed
+        /// files, but instead reports issues via the warnings list.</remarks>
+        /// <returns>A tuple containing a dictionary of area requirements keyed by room type, and a list of warning messages
+        /// describing any issues encountered while loading the data. If the CSV file is missing or empty, the
+        /// dictionary may contain default values or be empty, and warnings will describe the condition.</returns>
         internal static (Dictionary<string, double>areas, List<string> warnings) Load()
         {
             List<string> warningMessages= new() {};
