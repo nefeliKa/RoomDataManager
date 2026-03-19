@@ -39,11 +39,11 @@ Files to copy:
 
 ### Room Inspector
 Select one or more rooms in the model and click this button to see a report of their name, number, area, and comments.
-![Interface screenshot](RevitInstructions/RoomInspector-4.JPG)
+![Interface screenshot](RevitInstructions/RoomInspector-4.jpg)
 
 ### Rooms by Floor
 Displays a list of all rooms on the currently active floor plan view, with their key data (currently Room Name, Number, Area).
-![Interface screenshot](RevitInstructions/RoomInspectorByFloor-3.JPG)
+![Interface screenshot](RevitInstructions/RoomInspectorByFloor-3.jpg)
 
 
 ### Room Reporter
@@ -53,7 +53,7 @@ Selects rooms and writes a default comment ("Pending Review") to any room that h
 
 ### CSV Exporter
 Exports room data (name, number, area, comments) to a `.csv` file saved on your Desktop. The file is timestamped so each export is kept separately.
-![Interface screenshot](RevitInstructions/CsvExporter-4.JPG)
+![Interface screenshot](RevitInstructions/CsvExporter-4.jpg)
 ![Interface screenshot](RevitInstructions/CsvExporter-3.JPG)
 
 ### BIM Checker
@@ -63,7 +63,7 @@ Checks all selected rooms for common data issues:
 
 Minimum area requirements are read from `bim_requirements.csv` in your Revit add-ins folder. Edit that file to customise thresholds for your project. If the file is missing, built-in defaults are used.
 
-![Interface screenshot](RevitInstructions/BimChecker-5.JPG)
+![Interface screenshot](RevitInstructions/BimChecker-5.jpg)
 
 Any issues found are written directly into the room's comment field in Revit, so they are visible in the model.
 
