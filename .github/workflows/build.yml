@@ -32,6 +32,7 @@ jobs:
           path: |
             **/bin/Release/**/*.dll
             **/*.addin
+            **/*.csv 
           retention-days: 30
 
 
@@ -64,6 +65,7 @@ jobs:
           New-Item -ItemType Directory -Path release_output
           Copy-Item -Path "**/bin/Release/**/*.dll" -Destination release_output
           Copy-Item -Path "**/*.addin" -Destination release_output
+          Copy-Item -Path "**/*.csv" -Destination release_output
           Compress-Archive -Path release_output/* -DestinationPath RoomDataManager.zip
 
       - name: Upload to GitHub Release

@@ -32,8 +32,9 @@
 		</PackageReference>
 	</ItemGroup>
 
+	<!-- If Revit is running the target DLL will be locked. Check for a running Revit process and skip copying when it's running -->
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\2026\" />
+		<Exec Command="powershell -NoProfile -NonInteractive -Command &quot;if (Get-Process -Name Revit -ErrorAction SilentlyContinue) { Write-Host 'Revit is running; skipping copy of $(TargetFileName) to $(AppData)\\Autodesk\\Revit\\Addins\\2026\\'; exit 0 } else { Copy-Item -Path '$(TargetPath)' -Destination '$(AppData)\\Autodesk\\Revit\\Addins\\2026\\' -Force }&quot;" />
 	</Target>
 
 </Project>

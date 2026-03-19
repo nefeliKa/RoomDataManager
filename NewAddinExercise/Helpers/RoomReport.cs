@@ -4,13 +4,22 @@ using Autodesk.Revit.DB.Architecture;
 
 namespace RoomDataManager.Helpers
 {
+    /// <summary>
+    /// Holds a snapshot of a room's data at the time of inspection, including whether its comment was updated.
+    /// </summary>
     public class RoomReport
     {
+        /// <summary>The room's name as set in Revit.</summary>
         public string Name { get; }
+        /// <summary>The room's number as set in Revit.</summary>
         public string Number { get; }
+        /// <summary>The room's area in square metres, rounded to two decimal places.</summary>
         public double Area { get; }
+        /// <summary>The room's comment parameter value at the time of inspection.</summary>
         public string Comment { get; internal set; }
+        /// <summary>True if the comment field was empty when the report was created.</summary>
         public bool CommentWasEmpty { get; }
+        /// <summary>True if the comment was written to during this operation.</summary>
         public bool WasUpdated { get; internal set; }
 
         /// <summary>
@@ -25,7 +34,7 @@ namespace RoomDataManager.Helpers
         {
             Name = room.Name;
             Number = room.Number;
-            Area = Math.Round(room.Area*0.0929,2);
+            Area = Math.Round(UnitUtils.ConvertFromInternalUnits(room.Area, UnitTypeId.SquareMeters), 2);
             Comment = room.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)?.AsString() ?? string.Empty;
             CommentWasEmpty = ReadCommentIsEmpty();
 

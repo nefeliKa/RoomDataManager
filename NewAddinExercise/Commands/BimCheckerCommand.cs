@@ -49,13 +49,21 @@ namespace RoomDataManager.Commands
             }
 
             // Step 2: build a RoomCheckerRunner with both checkers.
-            Dictionary<string, double> minimumAreaPerRoomType = new()
+            var (minimumAreaPerRoomType, warnings) = BimConfigHelper.Load();
+
+            foreach (string roomType in minimumAreaPerRoomType.Keys)
             {
-                ["Kitchen"] = 8.0,
-                ["Bedroom"] = 10.0,
-                ["Bathroom"] = 4.0,
-                ["Livingroom"] = 15.0
-            };
+                bool anyMatch = rooms.Any(r => r.Name.Contains(roomType, StringComparison.OrdinalIgnoreCase));
+                if (!anyMatch) warnings.Add($"'{roomType}' in bim_requirements.csv doesn't match any selected room.");
+            }
+
+            if (warnings.Count > 0)
+            {
+                TaskDialog warningDialog = new TaskDialog("BIM Checker Warnings");
+                warningDialog.MainInstruction = "Warnings loading BIM requirements";
+                warningDialog.MainContent = string.Join("\n", warnings);
+                warningDialog.Show();
+            }
 
             MinAreaChecker minChecker = new MinAreaChecker(minimumAreaPerRoomType);
             RequiredParamsChecker paramChecker = new RequiredParamsChecker();

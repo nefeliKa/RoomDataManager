@@ -7,8 +7,16 @@ using System.Windows.Media.Imaging;
 
 namespace RoomDataManager
 {
+    /// <summary>
+    /// Entry point for the Room Data Manager add-in. Registers the ribbon tab and all buttons on Revit startup.
+    /// </summary>
     public class App : IExternalApplication
     {
+        /// <summary>
+        /// Called by Revit when the add-in loads. Creates the ribbon tab, panel, and all command buttons.
+        /// </summary>
+        /// <param name="application">The Revit controlled application used to modify the ribbon UI.</param>
+        /// <returns>Result.Succeeded if startup completes without a fatal error.</returns>
         public Result OnStartup(UIControlledApplication application)
         {
             // Create a custom tab in the Revit ribbon, then add a panel inside it
@@ -73,6 +81,11 @@ namespace RoomDataManager
             return Result.Succeeded;
         }
 
+        /// <summary>
+        /// Called by Revit when the add-in unloads. No cleanup required.
+        /// </summary>
+        /// <param name="application">The Revit controlled application.</param>
+        /// <returns>Result.Succeeded.</returns>
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;

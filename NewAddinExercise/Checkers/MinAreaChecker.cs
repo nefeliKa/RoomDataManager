@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 
 namespace RoomDataManager.Checkers
@@ -33,16 +34,16 @@ namespace RoomDataManager.Checkers
         public List<RoomIssue> Check(Room room)
         {
             List<RoomIssue> issueList = new List<RoomIssue>();
-            
-            // area conversion: room.Area is in ft², multiply by 0.0929 to get m²
-            double areaInMeters = Math.Round(room.Area * 0.0929,2);
+
+            // convert internal units (ft²) to m² using Revit API
+            double areaInMeters = UnitUtils.ConvertFromInternalUnits(room.Area, UnitTypeId.SquareMeters);
 
             // Find and retrieve the first item of the dictionary whose name is contained in the roomName
             var match = _minAreas.FirstOrDefault(entry => room.Name.Contains(entry.Key, StringComparison.OrdinalIgnoreCase));
             if (match.Key != null && areaInMeters < match.Value)
             
                 // if below threshold, add a new RoomIssue with IssueSeverity.Error
-                issueList.Add(new RoomIssue(roomName: room.Name, description: "Room is too small", severity: IssueSeverity.ERROR));
+                issueList.Add(new RoomIssue(roomName: room.Name, description: $"Room is too small: {Math.Round(areaInMeters, 2)} m² (min: {match.Value} m²)", severity: IssueSeverity.ERROR));
             
 
             return issueList;

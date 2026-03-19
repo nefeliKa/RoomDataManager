@@ -9,6 +9,9 @@ using Autodesk.Revit.UI;
 
 namespace RoomDataManager.Helpers
 {   
+    /// <summary>
+    /// Provides shared utilities for retrieving and reporting on Revit room elements.
+    /// </summary>
     internal static class RoomHelper
     {
         /// <summary>

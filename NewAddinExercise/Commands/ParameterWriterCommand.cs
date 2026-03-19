@@ -9,6 +9,9 @@ using System.IO;
 
 namespace RoomDataManager.Commands
 {
+    /// <summary>
+    /// Writes a default comment to any selected room whose comment field is empty, then reports the results.
+    /// </summary>
     [Transaction(TransactionMode.Manual)]
     internal class ParameterWriterCommand : IExternalCommand
     {   
